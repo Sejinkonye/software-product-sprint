@@ -1,18 +1,63 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta charset="UTF-8">
-    <title>My Portfolio</title>
+    <title>Somto's Portfolio</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://www.google.com/css/maia.css">
     <script src="script.js"></script>
-  </head>
-  <body>
+</head>
+
+<body onload="loadComments()">
     <div id="content">
-      <h1>My Portfolio</h1>
-      <p>This is my portfolio.</p>
-      <p>Click here to get a random message:</p>
-      <button onclick="addRandomGreeting()">Hello</button>
-      <div id="greeting-container"></div>
+        <h1>Somto Ejinkonye's Portfolio</h1>
+        <p>This is my portfolio.</p>
+        <md-progress-circular md-mode="indeterminate" class="md-accent" ng-show="ctrl.loading" md-diameter="35">
+            Hello, I am Somto Ejinkonye and I am a Junior studying Computer Engineering and NYU. I am passonate about
+            cybersecurity, prototyping and embedded systems.
+        </md-progress-circular>    
+        </br>    
+        <img src="images/profile.JPG" width="300" height="300" alt="Profile Pic">
+
+        <img src="images/christmas.jpg" width="540" height="540" alt="Group photo">
+        <p> <strong>Click here to get a random fact about computer science!</strong></p>
+        <button onclick="addRandomfact()">Click on me to get a random computer fact.</button>
+        <div id="fact-container"></div>
+        <h2>About Me:</h2>
+        <p>I am an avid hardware enthusiast and problemsolver. Here are some of my projects and interests.</p>
+        <img src="images/cpu_transistors.gif" width="500" height="288">
+        <img src="images/cryptography.png" width="400" height="200">
+        <H2>Projects</H2>
+        <p>During my senior year of highschool my robotics team built a quadcopter and attempted to program it
+            autonomously navigate an obstical field.</p>
+        <img src="images/drone1.JPG" width="326" height="244">
+        <img src="images/drone2.JPG" width="326" height="244">
+        <h2>Hobbies/Jobs</h2>
+        <img src="images/raspberrypi.jpg" width="350" height="219">
+        <br>
+        <md-progress-circular md-mode="indeterminate" class="md-accent" ng-show="ctrl.loading" md-diameter="35">
+            I am Data Structures and Algorithms Teaching assistant and a cybersecurity Intern.
+            I enjoys teaching others about data structures and problem solving and learning about ways
+            to keep myself secure. In my freetime I enjoy reading about adavancements in technology,
+            storytelling, reading comics and exploring the city.
+        </md-progress-circular>
+
+        <p>I enjoy exploring different music genres and would love any suggestions/reccomendations.</p>
+
+        <h3>User Comments!</h3>
+        <ul id="comment-list"></ul>
+        </br>
+        <div>
+            <h3>Have a Suggestion? Leave a Comment!</h3>
+            </br>
+            <form action="/data" method="post" id="usercomment">                
+                <textarea rows ="4" cols="50" name="comment" placeholder="Leave your comment here..."> </textarea>
+                </br>
+                <input type="submit">
+            </form>
+        </div>
     </div>
-  </body>
+</body>
+
 </html>

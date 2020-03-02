@@ -15,14 +15,32 @@
 /**
  * Adds a random greeting to the page.
  */
-function addRandomGreeting() {
-  const greetings =
-      ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
+function addRandomfact() {
+  const computerFacts =
+      ["90% of the world's data was created in the last 2 years!", "A average smartphone is over one million times faster than the Apollo Guidance Computer!",
+       "CAPTCHA means-“Completely Automated Public Turing Test to tell Computers and Humans Apart”.", " The first 1GB hard disk drive was announced in 1980 which weighed about 550 pounds, and had a price tag of $40,000.", 
+       "The original name of Windows was Interface Manager."];
 
   // Pick a random greeting.
-  const greeting = greetings[Math.floor(Math.random() * greetings.length)];
+  const randomFact = computerFacts[Math.floor(Math.random() * computerFacts.length)];
 
   // Add it to the page.
-  const greetingContainer = document.getElementById('greeting-container');
-  greetingContainer.innerText = greeting;
+  const factContainer = document.getElementById('fact-container');
+  factContainer.innerText = randomFact;
+}
+function loadComments(){
+    fetch('/data').then(response => response.json()).then((UserComment) => {
+    const commentListElement = document.getElementById('comment-list');
+    UserComment.forEach((UserComment) => {
+      commentListElement.appendChild(createCommentElement(UserComment));
+    })
+  });
+}
+function createCommentElement(comment){
+    const commentElement = document.createElement('li');
+    commentElement.className = 'comment';
+    const contentElement = document.createElement('span'); //add bolded timestamps
+    contentElement.innerText = comment.body;
+    commentElement.appendChild(contentElement);
+    return commentElement;
 }
