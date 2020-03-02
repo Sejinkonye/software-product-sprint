@@ -28,3 +28,19 @@ function addRandomfact() {
   const factContainer = document.getElementById('fact-container');
   factContainer.innerText = randomFact;
 }
+function loadComments(){
+    fetch('/data').then(response => response.json()).then((UserComment) => {
+    const commentListElement = document.getElementById('comment-list');
+    UserComment.forEach((UserComment) => {
+      commentListElement.appendChild(createCommentElement(UserComment));
+    })
+  });
+}
+function createCommentElement(comment){
+    const commentElement = document.createElement('li');
+    commentElement.className = 'comment';
+    const contentElement = document.createElement('span'); //add bolded timestamps
+    contentElement.innerText = comment.body;
+    commentElement.appendChild(contentElement);
+    return commentElement;
+}
