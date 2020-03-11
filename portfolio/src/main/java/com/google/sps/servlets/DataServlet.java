@@ -27,6 +27,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.*;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 
@@ -34,14 +36,14 @@ import java.util.*;
 public class DataServlet extends HttpServlet {
     public class UserComment{
         long timestamp;
+        String emailaddress;
+        String nickname;
         String body;
         public UserComment(long ts, String cmt){
             this.timestamp =ts;
             this.body = cmt;
         }
-    }
-
-  
+    } 
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -53,6 +55,7 @@ public class DataServlet extends HttpServlet {
              
         String commentBody = (String) entity.getProperty("body");
         long timestamp = (long) entity.getProperty("timestamp");  
+        String emailaddress = (String) entity.getProperty("emailaddress");
         UserComment newComment = new UserComment(timestamp, commentBody);
         comments.add(newComment);      
     }
@@ -62,21 +65,23 @@ public class DataServlet extends HttpServlet {
   }
   
   @Override
-  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-      //retrieve comment from user input
-      String commentBody = request.getParameter("comment");
-      long timestamp = System.currentTimeMillis();
-
-      Entity commentEntity = new Entity("Comment");
-      commentEntity.setProperty("body", commentBody);
-      commentEntity.setProperty("timestamp", timestamp);
-
-      DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-      datastore.put(commentEntity);
-
-    
-      //redirects to homepage so the user can see the comment
-      response.sendRedirect("/index.html");
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {        
+       
+        UserService userService = UserServiceFactory.getUserService();         
+        //retrieve comment from user input    
+    if (userService.isUserLoggedIn()) { 
+        String commentBody = request.getParameter("comment");
+        long timestamp = System.currentTimeMillis();
+        String emailaddress = userService.getCurrentUser().getEmail();
+        Entity commentEntity = new Entity("Comment");
+        commentEntity.setProperty("body", commentBody);
+        commentEntity.setProperty("timestamp", timestamp);
+        commentEntity.setProperty("emailaddress", emailaddress);
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        datastore.put(commentEntity);        
+        //redirects to homepage so the user can see the comment
+        response.sendRedirect("/index.html");
+    }
   }
   
  
